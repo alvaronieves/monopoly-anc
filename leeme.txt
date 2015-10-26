@@ -1,0 +1,9 @@
+Este archivo es un mensaje
+Crear un repositorio en GitHub
+Clonar el repositorio (para tener los archivos localmente)
+Copiar/crear nuestros archivos en el repositorio local
+------- Los siguientes comandos --------
+git add --all
+git commit -m "Modificaciones del archivo leeme.txt"
+git push [credenciales]
+-------------------------------------------------

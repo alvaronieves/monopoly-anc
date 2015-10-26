@@ -1,7 +1,29 @@
 describe("Monopoly",function(){
 
 	beforeEach(function(){
-		new iniJuego();
+		juego = new Juego();
+		juego.nuevaPartida();
+		usr1 = new Usuario('pepe');
+		juego.nuevoUsuario(usr1);
+		juego.partidas[0].nuevoParticipante(usr1)
+		usr2 = new Usuario('juan');
+		juego.nuevoUsuario(usr2);
+		juego.partidas[0].nuevoParticipante(usr2)
+		usr3 = new Usuario('luis');
+		juego.nuevoUsuario(usr3);
+		juego.partidas[0].nuevoParticipante(usr3)
+		usr4 = new Usuario('raul');
+		juego.nuevoUsuario(usr4);
+		juego.partidas[0].nuevoParticipante(usr4)
+		usr5 = new Usuario('pablo');
+		juego.nuevoUsuario(usr5);
+		juego.partidas[0].nuevoParticipante(usr5)
+		usr6 = new Usuario('carlos');
+		juego.nuevoUsuario(usr6);
+		juego.partidas[0].nuevoParticipante(usr6)
+		usr7 = new Usuario('sara');
+		juego.nuevaPartida();
+		tablero = juego.partidas[0].tablero
 	});
 
 	describe("Crear el juego",function(){
@@ -236,6 +258,57 @@ describe("Monopoly",function(){
 			expect(tablero.casillas[38].tema.nombre).toEqual('ImpuestoLujo');
 		});
 	});
+
+	describe("Comprobar el dado",function(){
+		it("la suma de los dados debe ser entre 2 y 12 ",function(){
+			var dado = new Dado()
+			for(i=0;i<100;i++){
+				res=dado.lanzar();
+				res+=dado.lanzar();
+				expect(res).toBeGreaterThan(1);
+				expect(res).toBeLessThan(13);
+			}
+		});
+	});
+
+	describe("Comprobar las fichas asignadas",function(){
+		it("comprobar que en una partida se asignan 6 fichas ",function(){
+			juego.nuevoUsuario(usr7);
+			juego.partidas[0].nuevoParticipante(usr7)
+			expect(juego.partidas[0].participantes.length).toEqual(6);
+		});
+
+		it("comprobar que las fichas tienen usuarios ",function(){
+			for(i=0;i<6;i++){
+				expect(juego.partidas[0].participantes[i].usuario).toEqual(juego.usr[i]);
+			}
+		});
+
+		it("comprobar que cada ficha es de un color distinto ",function(){
+			for(x=0;x<6;x++){
+				for(y=0;y<6;y++){
+					if(x==y)
+						expect(juego.partidas[0].participantes[x].color).toEqual(juego.partidas[0].participantes[y].color)
+					else
+						expect(juego.partidas[0].participantes[x].color).not.toEqual(juego.partidas[0].participantes[y].color)
+				}
+			}
+		});
+
+		it("comprobar que cada ficha tiene un saldo inicial de 150000 ",function(){
+			for(i=0;i<6;i++){
+				expect(juego.partidas[0].participantes[i].saldo).toEqual(150000);
+			}
+		});
+
+		it("comprobar que la ficha puede lanzar dos dados ",function(){
+			expect(juego.partidas[0].participantes[0].posicion).toEqual(0)
+			juego.partidas[0].participantes[0].lanzar()
+			expect(juego.partidas[0].participantes[0].posicion).not.toEqual(0)
+		});
+
+	});
+
 
 
 })

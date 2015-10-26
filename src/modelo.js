@@ -163,6 +163,114 @@ function VolverCarcel(){
 
 function iniJuego(){
 	tablero = new Tablero(40)
+	dado = new Dado()
 	tablero.configurarTablero()
+}
+
+function Dado(){
+	this.lanzar=function(){
+		return Math.round(Math.random()*5+1)
+	}
+}
+
+function Usuario(nombre){
+	this.nombre=nombre
+	juego 
+	
+	this.getNombre=function(){
+		return nombre
+	}
+	this.setNombre=function(nombre){
+		this.nombre=nombre
+	}
+
+}
+
+function Ficha(usuario,color,saldo,partida){
+	this.usuario=usuario
+	this.color=color
+	this.saldo=saldo
+	this.partida=partida
+	this.posicion=0
+	var doble=0
+	var carcel=false
+	var contCarcel=0
+
+	this.lanzar=function(){
+		if(carcel){
+			contCarcel++
+			if(contCarcel==3){
+				carcel=false
+			}
+			this.posicion=10
+			return this.imprimirCasilla()
+		}
+		var x=partida.dado.lanzar()
+		var y=partida.dado.lanzar()
+		if(this.posicion+x+y > 39){
+			this.posicion=(x+y)-(39-this.posicion)
+		}
+		else{
+			this.posicion=this.posicion+x+y	
+		}
+		if(x==y){
+			doble=doble+1
+		}
+		if(doble==3){
+			carcel=true
+		}
+		console.log('Dado 1: '+x+' Dado 2: '+y)
+		this.imprimirCasilla()
+	}
+
+	this.imprimirCasilla=function(){
+		console.log('Estas en la casilla '+this.partida.tablero.casillas[this.posicion].tema.nombre+' y posicion '+this.posicion)
+	}
+
+}
+
+function Juego(){
+	this.usr=[]
+	this.partidas=[]
+
+	this.nuevoUsuario=function(nombre){
+		this.usr.push(nombre)
+	}
+
+	this.nuevaPartida=function(){
+		this.partidas.push(new Partida)
+	}
+}
+
+function Partida(){
+	this.participantes=[]
+	this.fichasDisponibles=6
+	var color=''
+
+	this.tablero = new Tablero(40)
+	this.dado = new Dado()
+	this.tablero.configurarTablero()
+	
+
+	this.nuevoParticipante=function(usr){
+		if(this.fichasDisponibles>0){
+			switch(this.fichasDisponibles){
+				case 1: color='azul'
+				break
+				case 2: color='rojo'
+				break
+				case 3: color='amarillo'
+				break
+				case 4: color='verde'
+				break
+				case 5: color='blanco'
+				break
+				case 6: color='negro'
+				break
+			}
+			this.participantes[6-this.fichasDisponibles]=new Ficha(usr,color, 150000,this)
+			this.fichasDisponibles--
+		}
+	}
 }
 

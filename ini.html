@@ -4,6 +4,16 @@
 </head>
 <body>
 <script src="src/modelo.js"></script>
+<script>
+	juego = new Juego()
+	usr1 = new Usuario('pepe')
+	usr2 = new Usuario('juan')
+	juego.nuevoUsuario(usr1)
+	juego.nuevoUsuario(usr2)
+	juego.nuevaPartida()
+	juego.partidas[0].nuevoParticipante(usr1)
+	juego.partidas[0].nuevoParticipante(usr2)
+</script>
 
 </body>
 </html>
